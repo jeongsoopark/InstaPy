@@ -6,6 +6,7 @@ import random
 
 #태그로 검색한 게시물에 좋아유
 def tagLike(session, numLike, bFollow, morePost=1):
+    print("태그로 좋아요 누르기를 시작합니다. 태그 목록은 hashtags.txt를 이용하세요")
     taglist = session.target_list("hashtags.txt")
     print("좋아요 숫자=", numLike, "다른 포스트 좋아요 숫자=", morePost)
     #Random choose from big tag list
@@ -17,6 +18,7 @@ def tagLike(session, numLike, bFollow, morePost=1):
      
 #태그로 검색한 게시물에 가서 게시자 팔로
 def tagFollow(session, numFollow):
+    print("태그로 팔로우하기를 시작합니다. 태그 목록은 hashtags.txt를 이용하세요")
     taglist = session.target_list("hashtags.txt")
     #Random choose from big tag list
     print("팔로어 숫자 = ", numFollow)

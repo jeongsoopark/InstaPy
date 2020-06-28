@@ -10,9 +10,15 @@ import schedule
 import time                             
 import random
 import psutil
+from pathlib import Path
+import os.path
 
-userid = "jeongsoop0"
-userpw = "Ss19751975"
+
+###############################
+isTestMode = True
+###############################
+userid = ""
+userpw = ""
 
 PROCNAME_DRIVER = "geckodriver.exe"
 PROCNAME_BROWSER="firefox.exe"
@@ -24,6 +30,26 @@ for proc in psutil.process_iter():
     elif proc.name() == PROCNAME_BROWSER:
       proc.kill()
 
+#command line interface로 가즈아
+# 
+idpwFileExist = os.path.isfile("idpw.txt")
+if idpwFileExist == True: 
+    idpwFile = open("idpw.txt", "r")
+    credential = idpwFile.read().split('\n')
+    userid = credential[0]
+    userpw = credential[1]
+    #userpw = idpwFile.read().split('\n')
+else:
+    print("id/password 파일이 없습니다\n")
+    userid = input("ID :")
+    userpw = input("PW :")
+    idpwFile = open("idpw.txt", "w")
+    idpwFile.write(userid)
+    idpwFile.write("\n")
+    idpwFile.write(userpw)
+    idpwFile.write("\n")
+    idpwFile.close()
+    print("새 idpw.txt를 저장했습니다")
 
 # set workspace folder at desired location (default is at your home folder)
 set_workspace(path=None)
@@ -49,32 +75,44 @@ with smart_run(session):
     myUnfollowers = session.pick_nonfollowers("jeongsoop0", live_match=True, store_locally=True)
 print(myUnfollowers)
 """
-gNumFollower=random.randint(20, 50)
-gNumLike=random.randint(20, 50)
-gNumUnfollow=random.randint(20, 50)
+print("동작할 숫자를 설정합니다. 각 숫자는 입력값의 -30, +30사이에서 랜덤으로 생성됩니다.")
+nFollow = int(input("태그로 검색/팔로우시 한 태그당 좋아요 누를 수:"))
+nLike = int(input("태그로 검색/좋아요시 한 태그당 좋아요 누를 수:"))
+nUnfollow = int(input("언팔할 사람 수: "))
+gNumFollower=random.randint(nFollow-30 ,nFollow+30)
+gNumLike=random.randint(nLike-30, nLike+30)
+gNumUnfollow=random.randint(nUnfollow-30, nUnfollow+30)
 
-def setNumbers():
+def setNumbers(nFollow, nLike, nUnfollow):
     #############################################################################################
     #태그로 검색해서 팔로우할 숫자
     global gNumFollower 
-    gNumFollower = random.randint(20, 40)
+    gNumFollower=random.randint(nFollow-30 ,nFollow+30)
     #태그로 검색해서 좋아요 할 숫자
     global gNumLike
-    gNumLike = random.randint(20, 40)
+    gNumLike=random.randint(nLike-30, nLike+30)
     #찾아서 언팔할 숫자
     global gNumUnfollow 
-    gNumUnfollow= random.randint(20, 40)
-    #
+    gNumUnfollow=random.randint(nUnfollow-30, nUnfollow+30)
 
+    #
 print("좋아요 초기값 = ", gNumLike, "팔로우 초기값", gNumFollower, "언팔 초기값", gNumUnfollow)
 
 #시간은 반드시 앞에 0으로 시작하는 세트여야함, 6시면 06, 9분이면 09, 7시 2분이면 07:02 이런 식으로
-schedule.every().day.at("06:00").do(setNumbers)
-schedule.every().day.at("09:03").do(tagModule.tagLike, session, gNumLike, False)
-schedule.every().day.at("13:03").do(tagModule.tagFollow, session, gNumFollower)
-schedule.every().day.at("16:14").do(followModule.unfollow, session, gNumUnfollow)
+print("예약시간을 설정합니다. 각 시간은 0을 포함한 시각이어야 합니다. 예로 6시면 06:00, 7시 2분이면 07:02로 입력해주세요")
+timeTagLike = input("태그로 좋아요 예약시간: 좋아요 후 3초간의 딜레이가 발생합니다. ")
+timeTagFollow = input("태그로 follow 예약시간: ")
+timeUnfollow = input("Unfollow 예약시간: ")
 
-while True:
-  schedule.run_pending()
-  time.sleep(10)
-#schedule.every(5).minutes.do(tagModule.tagLike, session, 1, False)
+if isTestMode == True:
+    tagModule.tagLike(session, 6, False, 3)
+else:
+    schedule.every().day.at("06:00").do(setNumbers)
+    schedule.every().day.at("09:03").do(tagModule.tagLike, session, gNumLike, False)
+    schedule.every().day.at("13:03").do(tagModule.tagFollow, session, gNumFollower)
+    schedule.every().day.at("16:14").do(followModule.unfollow, session, gNumUnfollow)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(10)
+        #schedule.every(5).minutes.do(tagModule.tagLike, session, 1, False)
