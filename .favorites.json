@@ -1,0 +1,47 @@
+[
+    {
+        "type": "File",
+        "name": "d:\\Github\\InstaPy\\tagModule.py",
+        "parent_id": null,
+        "fsPath": "d:\\Github\\InstaPy\\tagModule.py",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "WxOeQDLjRl2vN57h"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Github\\InstaPy\\unfollow.py",
+        "parent_id": null,
+        "fsPath": "d:\\Github\\InstaPy\\unfollow.py",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "IQskg5GEAFnXSDRo"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Github\\InstaPy\\main.py",
+        "parent_id": null,
+        "fsPath": "d:\\Github\\InstaPy\\main.py",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "YvxCN6byM1OGLkIq"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Github\\InstaPy\\hashtags.txt",
+        "parent_id": null,
+        "fsPath": "d:\\Github\\InstaPy\\hashtags.txt",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "PqGOfX5D60ruVnJe"
+    },
+    {
+        "type": "File",
+        "name": "d:\\Github\\InstaPy\\followModule.py",
+        "parent_id": null,
+        "fsPath": "d:\\Github\\InstaPy\\followModule.py",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "suKROYjAfEmFXa26"
+    }
+]
