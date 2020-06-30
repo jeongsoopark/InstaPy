@@ -113,7 +113,7 @@ with smart_run(session):
 print(myUnfollowers)
 """
 
-ignoreList = session.target_list("ignoreList.txt")
+ignoreList = session.target_list("ignore.txt")
 session.set_ignore_if_contains(ignoreList)
 setNumbers()
 
