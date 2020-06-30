@@ -21,7 +21,7 @@ nLike = 20
 #좋야오 하나당 1분 정도 걸리니까 예약시간 잘 계산해서 넣어야함
 #태그 좋야요 실행할 예약 시간
 timeLike = [
-    "09:00",
+   "09:00",
     "15:00",
     "21:00"
 ]
@@ -91,30 +91,6 @@ else:
 # set workspace folder at desired location (default is at your home folder)
 set_workspace(path=None)
 # get an InstaPy session!
-
-session = InstaPy(username=userid, password=userpw)
-
-session.set_action_delays(  enabled=True,
-                            randomize=True,
-                            random_range_from=50,
-                            random_range_to=130,
-                            like=3,
-                            comment=5,
-                            follow=4.17,
-                            unfollow=28,
-                            story=10)
-
-#tagModule.tagLike(session, numLike=gNumLike, bFollow=True)
-#tagModule.tagFollow(session, numFollow=gNumFollower)
-
-""" 
-with smart_run(session):
-    myUnfollowers = session.pick_nonfollowers("jeongsoop0", live_match=True, store_locally=True)
-print(myUnfollowers)
-"""
-
-ignoreList = session.target_list("ignore.txt")
-session.set_ignore_if_contains(ignoreList)
 setNumbers()
 
 
@@ -122,21 +98,21 @@ if isTestMode == False:
     schedule.every().day.at("01:00:00").do(setNumbers)
     for t in timeLike:
         print("좋아요 작업 예약 : ", t, "횟수", gNumLike)
-        schedule.every().day.at(t).do(tagModule.tagLike, session, gNumLike, False)
+        schedule.every().day.at(t).do(tagModule.tagLike, userid, userpw, gNumLike, False)
     #schedule.every().day.at("13:03").do(tagModule.tagFollow, session, gNumFollower)
     for t in timeUnfollow:
         print("언팔 작업 예약 : ", t, "횟수", gNumUnfollow)
-        schedule.every().day.at(t).do(followModule.unfollow, session, gNumUnfollow)
+        schedule.every().day.at(t).do(followModule.unfollow, userid, userpw, gNumUnfollow)
     while True:
         schedule.run_pending()
         time.sleep(10)
-        #schedule.every(5).minutes.do(tagModule.tagLike, session, 1, False)
+        #schedule.every(5).minutes.do(tagModule.tagLike, userid, userpw, 1, False)
 else:
 #    start = time.time()
 #    tagModule.tagLike(session, nLike, False)
 #    end = time.time()
 #    print(nLike, " taglike 걸린시간: ", (end-start), "초")
     start = time.time()
-    followModule.unfollow(session, nUnfollow)
+    followModule.unfollow(userid, userpw, nUnfollow)
     end = time.time()
     print(nUnfollow, " unfollow 걸린시간: ", (end-start), "초")
