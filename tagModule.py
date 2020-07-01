@@ -22,10 +22,11 @@ def tagLike(userid, userpw, numLike, bFollow, morePost=1):
     ignoreList = session.target_list("ignore.txt")
     session.set_ignore_if_contains(ignoreList)
 
-    print("태그로 좋아요 누르기를 시작합니다. 태그 목록은 hashtags.txt를 이용하세요")
-    taglist = session.target_list("hashtags.txt")
+    print("태그로 좋아요 누르기를 시작합니다. 태그 목록은 hashtags.txt에서 5개 무작위추출합니다")
+    taglistfull = session.target_list("hashtags.txt")
     print("좋아요 숫자=", numLike, "다른 포스트 좋아요 숫자=", morePost)
     #Random choose from big tag list
+    taglist = random.sample(taglistfull, 5)
     print(taglist)
     with smart_run(session):
         session.set_user_interact(amount=morePost-1, randomize=True, percentage=100)
@@ -49,10 +50,11 @@ def tagFollow(userid, userpw, session, numFollow):
 
     ignoreList = session.target_list("ignore.txt")
     session.set_ignore_if_contains(ignoreList)
-    print("태그로 팔로우하기를 시작합니다. 태그 목록은 hashtags.txt를 이용하세요")
-    taglist = session.target_list("hashtags.txt")
+    print("태그로 팔로우하기를 시작합니다. 태그 목록은 hashtags.txt에서 5개 무작위추출합니다")
+    taglistfull = session.target_list("hashtags.txt")
     #Random choose from big tag list
     print("팔로어 숫자 = ", numFollow)
+    taglist = random.sample(taglistfull, 5)
     print(taglist)
     with smart_run(session):
         session.follow_by_tags(taglist, amount=numFollow, skip_top_posts=False)

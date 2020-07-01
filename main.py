@@ -21,9 +21,11 @@ nLike = 20
 #좋야오 하나당 1분 정도 걸리니까 예약시간 잘 계산해서 넣어야함
 #태그 좋야요 실행할 예약 시간
 timeLike = [
-   "09:00",
-    "15:00",
-    "21:00"
+   "09:02",
+    "13:58",
+    "16:21",
+    "20:11", 
+    "22:01"
 ]
 nFollow = 20
 timeFollow = []
@@ -31,7 +33,8 @@ timeFollow = []
 nUnfollow = 20
 timeUnfollow = [
     "12:00",
-    "18:00"
+    "18:00",
+    "00:50"
 ]
 ###############################
 isTestMode = False
@@ -56,6 +59,8 @@ def setNumbers():
     gMinuteLike=random.randint(0, 59)
     global gMinuteUnfollower
     gMinuteUnfollower=random.randint(0, 59)
+    print("새숫자, 좋아요: ", gNumLike, "팔로어 : ", gNumFollower, "언팔 : ", gNumUnfollow)
+
 
 PROCNAME_DRIVER = "geckodriver.exe"
 PROCNAME_BROWSER="firefox.exe"
@@ -93,9 +98,8 @@ set_workspace(path=None)
 # get an InstaPy session!
 setNumbers()
 
-
 if isTestMode == False:
-    schedule.every().day.at("01:00:00").do(setNumbers)
+    schedule.every().day.at("00:40").do(setNumbers)
     for t in timeLike:
         print("좋아요 작업 예약 : ", t, "횟수", gNumLike)
         schedule.every().day.at(t).do(tagModule.tagLike, userid, userpw, gNumLike, False)
