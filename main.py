@@ -4,37 +4,41 @@
 from instapy import InstaPy
 from instapy import smart_run
 from instapy import set_workspace
-import schedule
 import time                             
 import random
 import psutil
-from pathlib import Path
 import os.path
+from apscheduler.schedulers.blocking import BlockingScheduler 
 
 #custom module
 import tagModule
 import followModule
 ##############################
+
 randomOffset = 5
 #태그로 좋아요 누를 포스트 수
 nLike = 20
 #좋야오 하나당 1분 정도 걸리니까 예약시간 잘 계산해서 넣어야함
 #태그 좋야요 실행할 예약 시간
-timeLike = [
-   "09:02",
-    "13:58",
-    "16:21",
-    "20:11", 
-    "22:01"
+likeTime = [
+#좋아요를 진행할 시간 
+#   [ 시, 분]
+    [  9, 2],
+    [ 13, 52],
+    [ 16, 19],
+    [ 20, 12],
+    [ 22, 23],
 ]
 nFollow = 20
 timeFollow = []
 #언팔 수
 nUnfollow = 20
-timeUnfollow = [
-    "12:00",
-    "18:00",
-    "00:50"
+unfollowTime = [
+#언팔을 진행할 시간 
+#   [ 시, 분]
+    [00, 50],
+    [12, 10],
+    [18,  9]
 ]
 ###############################
 isTestMode = False
@@ -61,10 +65,9 @@ def setNumbers():
     gMinuteUnfollower=random.randint(0, 59)
     print("새숫자, 좋아요: ", gNumLike, "팔로어 : ", gNumFollower, "언팔 : ", gNumUnfollow)
 
-
+#이전 작업이 있으면 삭제 
 PROCNAME_DRIVER = "geckodriver.exe"
 PROCNAME_BROWSER="firefox.exe"
-
 for proc in psutil.process_iter():
     # check whether the process name matches
     if proc.name() == PROCNAME_DRIVER:
@@ -97,20 +100,20 @@ else:
 set_workspace(path=None)
 # get an InstaPy session!
 setNumbers()
+sched = BlockingScheduler();
 
 if isTestMode == False:
-    schedule.every().day.at("00:40").do(setNumbers)
-    for t in timeLike:
+    jobid = 0;
+    for t in likeTime:
         print("좋아요 작업 예약 : ", t, "횟수", gNumLike)
-        schedule.every().day.at(t).do(tagModule.tagLike, userid, userpw, gNumLike, False)
-    #schedule.every().day.at("13:03").do(tagModule.tagFollow, session, gNumFollower)
-    for t in timeUnfollow:
+        sched.add_job(tagModule.tagLike, 'cron', args=[userid, userpw, gNumLike, False], id=str(jobid),  hour=str(t[0]), minute=str(t[1]))
+        jobid = jobid + 1
+    for t in unfollowTime:
         print("언팔 작업 예약 : ", t, "횟수", gNumUnfollow)
-        schedule.every().day.at(t).do(followModule.unfollow, userid, userpw, gNumUnfollow)
-    while True:
-        schedule.run_pending()
-        time.sleep(10)
-        #schedule.every(5).minutes.do(tagModule.tagLike, userid, userpw, 1, False)
+        sched.add_job(followModule.unfollow, 'cron', args=[userid, userpw, gNumUnfollow], id=str(jobid),  hour=str(t[0]), minute=str(t[1]))
+        jobid = jobid + 1
+    print("인스타 작업중...")
+    sched.start()
 else:
 #    start = time.time()
 #    tagModule.tagLike(session, nLike, False)
