@@ -4,9 +4,21 @@
 from instapy import smart_run
 from instapy import InstaPy
 import random
+import psutil
 
 #태그로 검색한 게시물에 좋아유
 def tagLike(userid, userpw, numLike, bFollow, morePost=1):
+    
+    #이전 작업이 있으면 삭제 
+    PROCNAME_DRIVER = "geckodriver.exe"
+    PROCNAME_BROWSER="firefox.exe"
+    for proc in psutil.process_iter():
+        # check whether the process name matches
+        if proc.name() == PROCNAME_DRIVER:
+            proc.kill()
+        elif proc.name() == PROCNAME_BROWSER:
+            proc.kill()
+
     session = InstaPy(username=userid, password=userpw)
 
     session.set_action_delays(  enabled=True,
@@ -36,6 +48,16 @@ def tagLike(userid, userpw, numLike, bFollow, morePost=1):
 #태그로 검색한 게시물에 가서 게시자 팔로
 def tagFollow(userid, userpw, session, numFollow):
     
+    #이전 작업이 있으면 삭제 
+    PROCNAME_DRIVER = "geckodriver.exe"
+    PROCNAME_BROWSER="firefox.exe"
+    for proc in psutil.process_iter():
+        # check whether the process name matches
+        if proc.name() == PROCNAME_DRIVER:
+            proc.kill()
+        elif proc.name() == PROCNAME_BROWSER:
+            proc.kill()
+
     session = InstaPy(username=userid, password=userpw)
 
     session.set_action_delays(  enabled=True,

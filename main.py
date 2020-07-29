@@ -24,7 +24,7 @@ likeTime = [
 #좋아요를 진행할 시간 
 #   [ 시, 분]
     [  9, 2],
-    [ 13, 52],
+    [ 14, 17],
     [ 16, 19],
     [ 20, 12],
     [ 22, 23],
@@ -73,7 +73,7 @@ for proc in psutil.process_iter():
     if proc.name() == PROCNAME_DRIVER:
         proc.kill()
     elif proc.name() == PROCNAME_BROWSER:
-      proc.kill()
+        proc.kill()
 
 #command line interface로 가즈아
 # 

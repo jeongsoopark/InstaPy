@@ -3,7 +3,7 @@
 # imports
 from instapy import smart_run
 from instapy import InstaPy
-
+import psutil
 import random
 
 
@@ -11,6 +11,16 @@ import random
 # 내가 팔로보냈는데 나 팔로 안하는 사람 언팔
 def unfollow(userid, userpw, numUnfollow):
       
+    #이전 작업이 있으면 삭제 
+    PROCNAME_DRIVER = "geckodriver.exe"
+    PROCNAME_BROWSER="firefox.exe"
+    for proc in psutil.process_iter():
+        # check whether the process name matches
+        if proc.name() == PROCNAME_DRIVER:
+            proc.kill()
+        elif proc.name() == PROCNAME_BROWSER:
+            proc.kill()
+
     session = InstaPy(username=userid, password=userpw)
 
     session.set_action_delays(  enabled=True,
