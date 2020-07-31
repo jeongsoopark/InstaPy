@@ -17,7 +17,7 @@ import followModule
 
 randomOffset = 5
 #태그로 좋아요 누를 포스트 수
-nLike = 20
+nLike = 5
 #좋야오 하나당 1분 정도 걸리니까 예약시간 잘 계산해서 넣어야함
 #태그 좋야요 실행할 예약 시간
 likeTime = [
@@ -27,7 +27,7 @@ likeTime = [
     [ 13, 52],
     [ 16, 19],
     [ 20, 12],
-    [ 22, 23],
+    [ 22, 54],
 ]
 nFollow = 20
 timeFollow = []
@@ -41,7 +41,7 @@ unfollowTime = [
     [18,  9]
 ]
 ###############################
-isTestMode = False
+isTestMode = True
 ###############################
 userid = ""
 userpw = ""
@@ -115,11 +115,11 @@ if isTestMode == False:
     print("인스타 작업중...")
     sched.start()
 else:
-#    start = time.time()
-#    tagModule.tagLike(session, nLike, False)
-#    end = time.time()
-#    print(nLike, " taglike 걸린시간: ", (end-start), "초")
     start = time.time()
-    followModule.unfollow(userid, userpw, nUnfollow)
+    tagModule.tagLike(userid, userpw, nLike, False)
     end = time.time()
-    print(nUnfollow, " unfollow 걸린시간: ", (end-start), "초")
+    print(nLike, " taglike 걸린시간: ", (end-start), "초")
+#    start = time.time()
+#    followModule.unfollow(userid, userpw, nUnfollow)
+#    end = time.time()
+#    print(nUnfollow, " unfollow 걸린시간: ", (end-start), "초")
