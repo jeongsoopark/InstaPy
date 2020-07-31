@@ -24,5 +24,9 @@ def unfollow(userid, userpw, numUnfollow):
                                 story=10)
 
     print("언팔 숫자 = ", numUnfollow)
-    with smart_run(session):
+    try:
+        session.login()
         session.unfollow_users(amount=numUnfollow, nonFollowers=True, style="RANDOM", unfollow_after=42*60*60, sleep_delay=random.randrange(500, 800))
+    except:
+        print("exception occur")
+        session.end()
