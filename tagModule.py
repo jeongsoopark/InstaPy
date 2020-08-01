@@ -40,7 +40,7 @@ def tagLike(userid, userpw, numLike, bFollow, morePost=1):
     #Random choose from big tag list
     taglist = random.sample(taglistfull, 5)
     print(taglist)
-    with smart_run(session):
+    with smart_run(session, threaded=True):
         session.set_user_interact(amount=morePost-1, randomize=True, percentage=100)
         session.set_do_follow(enabled=bFollow, percentage=100, times=1)
         session.like_by_tags(taglist, amount=numLike, interact=(bFollow or morePost > 1), skip_top_posts=False )
@@ -78,5 +78,5 @@ def tagFollow(userid, userpw, session, numFollow):
     print("팔로어 숫자 = ", numFollow)
     taglist = random.sample(taglistfull, 5)
     print(taglist)
-    with smart_run(session):
+    with smart_run(session, threaded=True):
         session.follow_by_tags(taglist, amount=numFollow, skip_top_posts=False)

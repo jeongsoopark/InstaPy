@@ -26,7 +26,7 @@ likeTime = [
     [  9, 2],
     [ 14, 17],
     [ 16, 19],
-    [ 20, 12],
+    [ 20,  2],
     [ 22, 23],
 ]
 nFollow = 20
@@ -100,10 +100,10 @@ else:
 set_workspace(path=None)
 # get an InstaPy session!
 setNumbers()
-sched = BlockingScheduler();
+sched = BlockingScheduler()
 
 if isTestMode == False:
-    jobid = 0;
+    jobid = 0
     for t in likeTime:
         print("좋아요 작업 예약 : ", t, "횟수", gNumLike)
         sched.add_job(tagModule.tagLike, 'cron', args=[userid, userpw, gNumLike, False], id=str(jobid),  hour=str(t[0]), minute=str(t[1]))
