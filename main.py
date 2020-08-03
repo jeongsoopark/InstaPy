@@ -27,7 +27,7 @@ likeTime = [
     [ 14, 17],
     [ 16, 19],
     [ 20,  2],
-    [ 22, 23],
+    [ 22, 14],
 ]
 nFollow = 20
 timeFollow = []
@@ -41,7 +41,7 @@ unfollowTime = [
     [18,  9]
 ]
 ###############################
-isTestMode = False
+isTestMode = True
 ###############################
 userid = ""
 userpw = ""
@@ -115,11 +115,11 @@ if isTestMode == False:
     print("인스타 작업중...")
     sched.start()
 else:
-#    start = time.time()
-#    tagModule.tagLike(session, nLike, False)
-#    end = time.time()
-#    print(nLike, " taglike 걸린시간: ", (end-start), "초")
     start = time.time()
-    followModule.unfollow(userid, userpw, nUnfollow)
+    tagModule.tagLike(userid, userpw, nLike, False)
     end = time.time()
-    print(nUnfollow, " unfollow 걸린시간: ", (end-start), "초")
+    print(nLike, " taglike 걸린시간: ", (end-start), "초")
+#    start = time.time()
+#    followModule.unfollow(userid, userpw, nUnfollow)
+#    end = time.time()
+#    print(nUnfollow, " unfollow 걸린시간: ", (end-start), "초")
