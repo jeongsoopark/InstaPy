@@ -17,7 +17,7 @@ import followModule
 
 randomOffset = 5
 #태그로 좋아요 누를 포스트 수
-nLike = 20
+nLike = 15
 #좋야오 하나당 1분 정도 걸리니까 예약시간 잘 계산해서 넣어야함
 #태그 좋야요 실행할 예약 시간
 likeTime = [
@@ -27,18 +27,15 @@ likeTime = [
     [ 14, 17],
     [ 16, 19],
     [ 20,  2],
-    [ 22, 14],
 ]
 nFollow = 20
 timeFollow = []
 #언팔 수
-nUnfollow = 20
+nUnfollow = 10
 unfollowTime = [
 #언팔을 진행할 시간 
 #   [ 시, 분]
     [00, 50],
-    [12, 10],
-    [18,  9]
 ]
 ###############################
 isTestMode = True
